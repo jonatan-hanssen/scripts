@@ -3,5 +3,5 @@
 # kill your grandfather, dooming yourself in the process
 ps o "ppid=" $$ | xargs ps o "ppid=" | xargs kill
 # as a final goodbye, start zathura
-nohup >&- 2>&- zathura $@ &
+nohup >&- 2>&- zathura "$@" &
 
