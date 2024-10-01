@@ -14,7 +14,7 @@ def run():
         command = sys.argv[1:]
     process = subprocess.Popen(command)
     process.communicate()
-    print(f'\n{" ".join(command)}: Done')
+    print(f'\n{" ".join(command)} finished with exit status {process.returncode}')
 
 
 def handle_interrupt(sig, frame):
@@ -26,12 +26,14 @@ def handle_interrupt(sig, frame):
 
 
 if __name__ == '__main__':
-    home = os.environ['HOME']
     global process
     process = None
     signal.signal(signal.SIGINT, handle_interrupt)
 
-    file_path = f'{home}/.config/nvim/dog'
+    file_path = '/tmp/tmp.pw.socket'
+    # ensure file exists
+    open(file_path, 'w').close()
+    run()
 
     last_modified = os.path.getmtime(file_path)
     while True:
