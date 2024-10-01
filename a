@@ -1,0 +1,18 @@
+#!/bin/sh
+
+look_for_env() {
+    local env_exists=$(find $1 -maxdepth 1 -type d -name env)
+    echo ${env_exists}
+}
+
+dir=$(pwd)
+
+if [[ -n $(look_for_env $dir) ]]; then
+    source $dir/env/bin/activate
+elif [[ -n $(look_for_env $dir/..) ]]; then
+    source $dir/../env/bin/activate
+elif [[ -n $(look_for_env $dir/../..) ]]; then
+    source $dir/../../env/bin/activate
+else
+    echo "No envs found in this directory nor parent or parent's parent"
+fi
