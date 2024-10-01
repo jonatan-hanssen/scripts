@@ -20,7 +20,7 @@ def run():
 def handle_interrupt(sig, frame):
     global process
     if process is not None and process.returncode is None:
-        print(process.send_signal(signal.SIGINT))
+        process.send_signal(signal.SIGINT)
     else:
         sys.exit(130)
 
@@ -29,15 +29,14 @@ if __name__ == '__main__':
     home = os.environ['HOME']
     global process
     process = None
-    # Using SIGUSR1 for the custom signal; you can use other signals if desired
     signal.signal(signal.SIGINT, handle_interrupt)
 
     file_path = f'{home}/.config/nvim/dog'
-    # Keep the program running to listen to signals
+
     last_modified = os.path.getmtime(file_path)
     while True:
         current_modified = os.path.getmtime(file_path)
         if current_modified != last_modified:
             run()
             last_modified = current_modified
-        time.sleep(0.01)
+        time.sleep(0.0166)  # this is 60 hz
