@@ -8,7 +8,10 @@ import time
 
 def run():
     global process
-    command = ['python3'] + sys.argv[1:]
+    if '.py' in sys.argv[1]:
+        command = ['python3'] + sys.argv[1:]
+    else:
+        command = sys.argv[1:]
     process = subprocess.Popen(command)
     process.communicate()
     print(f'\n{" ".join(command)}: Done')
